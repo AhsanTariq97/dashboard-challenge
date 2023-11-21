@@ -1,18 +1,38 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import FavoritesLogo from "./FavoritesLogo";
+import { formatTime12Hour } from "../helper/timeFn";
+import { formatDateAndDay } from "../helper/dateFn";
 
-const EventListItem = () => {
+const EventListItem = ({ event, index }: EventListItemProps) => {
   const [isFavorite, setIsFavorite] = useState(false);
+
+  const [location, setLocation] = useState("");
+  const [name, setName] = useState("");
+
+  useEffect(() => {
+    event.entities.map((entity) =>
+      entity.type === "venue"
+        ? setLocation(entity.formatted_address)
+        : setLocation(entity.formatted_address),
+    );
+  }, []);
+
   return (
     <div className="bg-primary-white flex min-w-fit items-center justify-between rounded-2xl border border-[#F3F3F3] px-5 py-4 xl:max-w-[850px]">
-      <h3 className="min-w-[40px] font-extrabold">01</h3>
-      <p className="min-w-[180px] font-medium">Web Development</p>
-      <p className="min-w-[80px] text-sm font-bold">12:00AM</p>
-      <p className="min-w-[120px] text-sm font-bold">Thu 2 Nov</p>
-      <p className="min-w-[200px] text-sm font-medium">
-        Bahria Intellectual Village
+      <h3 className="min-w-[40px] max-w-[40px] font-extrabold">
+        {index.toLocaleString("en-US", { minimumIntegerDigits: 2 })}
+      </h3>
+      <p className="min-w-[180px] max-w-[180px] font-medium">{event.title}</p>
+      <p className="min-w-[80px] max-w-[80px] text-sm font-bold">
+        {formatTime12Hour(event.start)}
+      </p>
+      <p className="min-w-[120px] max-w-[120px] text-sm font-bold">
+        {formatDateAndDay(event.start)}
+      </p>
+      <p className="min-w-[200px] max-w-[200px] text-sm font-medium">
+        {location}
       </p>
       <div className="flex min-w-[40px] cursor-pointer items-center justify-center">
         <FavoritesLogo
@@ -28,3 +48,46 @@ const EventListItem = () => {
 };
 
 export default EventListItem;
+
+type EventListItemProps = {
+  index: number;
+  event: {
+    relevance: number;
+    id: string;
+    title: string;
+    description: string;
+    category: string;
+    labels: string[];
+    rank: number;
+    local_rank: number | null;
+    phq_attendance: number | null;
+    entities: {
+      entity_id: string;
+      name: string;
+      type: string;
+      category: string;
+      labels: string[];
+      description: string;
+      formatted_address: string;
+    }[];
+    duration: number;
+    start: string;
+    end: string;
+    updated: string;
+    first_seen: string;
+    timezone: string | null;
+    location: [number, number];
+    geo: {
+      geometry: {
+        coordinates: [number, number];
+        type: string;
+      };
+    };
+    scope: string;
+    country: string;
+    place_hierarchies: string[][];
+    state: string;
+    brand_safe: boolean;
+    private: boolean;
+  };
+};

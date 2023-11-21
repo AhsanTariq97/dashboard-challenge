@@ -1,29 +1,9 @@
-"use client";
-
-import { useEffect, useState } from "react";
 import Image from "next/image";
 import React from "react";
 
 const Sidebar = () => {
-  const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth <= 1280);
-
-  useEffect(() => {
-    const handleResize = () => {
-      setIsSmallScreen(window.innerWidth <= 1280);
-    };
-
-    window.addEventListener("resize", handleResize);
-
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, []);
   return (
-    <div
-      className={`${
-        isSmallScreen ? "hidden" : "block"
-      } bg-primary-white flex h-[calc(100vh-80px)] w-20 flex-col items-center justify-start space-y-8 rounded-[40px] py-7`}
-    >
+    <div className="bg-primary-white hidden h-[calc(100vh-80px)] w-20 flex-col items-center justify-start space-y-8 rounded-[40px] py-7 xl:flex">
       <div className="flex h-12 w-12 items-center justify-center rounded-full bg-[#ECEAFF]">
         <Image
           src="/events_logo_colored.svg"
