@@ -17,10 +17,10 @@ const EventListItem = ({ event, index }: EventListItemProps) => {
         ? setLocation(entity.formatted_address)
         : setLocation(entity.formatted_address),
     );
-  }, []);
+  }, [event.entities]);
 
   return (
-    <div className="bg-primary-white flex min-w-fit items-center justify-between rounded-2xl border border-[#F3F3F3] px-5 py-4 xl:max-w-[850px]">
+    <div className="flex min-w-fit items-center justify-between rounded-2xl border border-[#F3F3F3] bg-primary-white px-5 py-4 xl:max-w-[850px]">
       <h3 className="min-w-[40px] max-w-[40px] font-extrabold">
         {index.toLocaleString("en-US", { minimumIntegerDigits: 2 })}
       </h3>
@@ -49,7 +49,7 @@ const EventListItem = ({ event, index }: EventListItemProps) => {
 
 export default EventListItem;
 
-type EventListItemProps = {
+export type EventListItemProps = {
   index: number;
   event: {
     relevance: number;

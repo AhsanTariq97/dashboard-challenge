@@ -5,7 +5,7 @@ import React, { useEffect, useState } from "react";
 import EventListItem from "../constants/EventListItem";
 
 const EventsList = () => {
-  const [events, setEvents] = useState([]);
+  const [events, setEvents] = useState<EventProp[] | []>([]);
 
   useEffect(() => {
     // Store in env
@@ -28,7 +28,9 @@ const EventsList = () => {
 
   const sortByName = () => {
     setEvents((prevEvents) =>
-      [...prevEvents].sort((a, b) => a.title.localeCompare(b.title)),
+      [...prevEvents].sort((a: EventProp, b: EventProp) =>
+        a.title.localeCompare(b.title),
+      ),
     );
   };
 
@@ -51,11 +53,10 @@ const EventsList = () => {
           <h4 className="min-w-[200px]">LOCATION</h4>
           <div className="flex min-w-[40px] items-center justify-center"></div>
         </div>
-        <div className="space-y-4">
+        <div className="max-h-96 space-y-4 overflow-y-scroll">
           {events.map((event, index) => (
-            <EventListItem event={event} index={index + 1} />
+            <EventListItem event={event} key={event.id} index={index + 1} />
           ))}
-          {/* <EventListItem /> */}
         </div>
       </div>
     </div>
@@ -63,3 +64,43 @@ const EventsList = () => {
 };
 
 export default EventsList;
+
+type EventProp = {
+  relevance: number;
+  id: string;
+  title: string;
+  description: string;
+  category: string;
+  labels: string[];
+  rank: number;
+  local_rank: number | null;
+  phq_attendance: number | null;
+  entities: {
+    entity_id: string;
+    name: string;
+    type: string;
+    category: string;
+    labels: string[];
+    description: string;
+    formatted_address: string;
+  }[];
+  duration: number;
+  start: string;
+  end: string;
+  updated: string;
+  first_seen: string;
+  timezone: string | null;
+  location: [number, number];
+  geo: {
+    geometry: {
+      coordinates: [number, number];
+      type: string;
+    };
+  };
+  scope: string;
+  country: string;
+  place_hierarchies: string[][];
+  state: string;
+  brand_safe: boolean;
+  private: boolean;
+};

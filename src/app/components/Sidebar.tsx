@@ -3,7 +3,7 @@ import React from "react";
 
 const Sidebar = () => {
   return (
-    <div className="bg-primary-white hidden h-[calc(100vh-80px)] w-20 flex-col items-center justify-start space-y-8 rounded-[40px] py-7 xl:flex">
+    <div className="hidden h-[calc(100vh-120px)] w-20 flex-col items-center justify-start space-y-8 rounded-[40px] bg-primary-white py-7 xl:flex">
       <div className="flex h-12 w-12 items-center justify-center rounded-full bg-[#ECEAFF]">
         <Image
           src="/events_logo_colored.svg"
